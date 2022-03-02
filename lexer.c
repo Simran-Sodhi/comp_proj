@@ -92,7 +92,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int buf_size)
 				
 				if(strlen(lexeme)!=0){
 					if(token.tokenId==0){
-						printf("Line no: %d : Error: Unknown pattern <%s>\n",lineNo, lexeme);
+						printf("Line no: %d: Error: Unknown pattern <%s>\n",lineNo, lexeme);
 						error=1;
 						lexicalerror=1;
 						state=1;
@@ -322,7 +322,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int buf_size)
 							break;
 					default:
 					lexicalerror = 1;
-						printf("Line No %d : Error: Unknown Symbol <%c>\n",lineNo, buffer[offset]);
+						printf("Line No %d: Error: Unknown Symbol <%c>\n",lineNo, buffer[offset]);
 						offset++;
 						error = 1;
 						state=1;
@@ -483,7 +483,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int buf_size)
 					lexeme[i++] = buffer[offset++];
 				}
 				else{
-						printf("Line no: %d : Error: Unknown Pattern <%s>\n",lineNo, lexeme);
+						printf("Line no: %d: Error: Unknown Pattern <%s>\n",lineNo, lexeme);
 						error = 1;
 						lexicalerror=1;
 						state=1;
@@ -550,7 +550,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int buf_size)
 
 				}
 				else{
-						printf("Line no: %d : Error: Unknown Pattern <%s>\n",lineNo, lexeme);
+						printf("Line no: %d: Error: Unknown Pattern <%s>\n",lineNo, lexeme);
 						error = 1;
 						lexicalerror=1;
 						state=1;
@@ -580,7 +580,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int buf_size)
 				}
 
 				else{
-						printf("Line no: %d : Error: Unknown Pattern <%s>\n",lineNo, lexeme);
+						printf("Line no: %d: Error: Unknown Pattern <%s>\n",lineNo, lexeme);
 						error = 1;
 						lexicalerror=1;
 						state=1;
@@ -598,7 +598,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int buf_size)
 				}
 
 				else{
-						printf("Line no: %d : Error: Unknown Pattern <%s>\n",lineNo, lexeme);
+						printf("Line no: %d: Error: Unknown Pattern <%s>\n",lineNo, lexeme);
 						error = 1;
 						lexicalerror=1;
 						state=1;
@@ -613,7 +613,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int buf_size)
 				}
 
 				else{
-						printf("Line no: %d : Error: Unknown Pattern <%s>\n",lineNo, lexeme);
+						printf("Line no: %d: Error: Unknown Pattern <%s>\n",lineNo, lexeme);
 						error = 1;
 						lexicalerror=1;
 						state=1;
@@ -631,7 +631,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int buf_size)
 				}
 
 				else{
-						printf("Line no: %d : Error: Unknown Pattern <%s>\n",lineNo, lexeme);
+						printf("Line no: %d: Error: Unknown Pattern <%s>\n",lineNo, lexeme);
 						error = 1;
 						lexicalerror=1;
 						state=1;
@@ -708,7 +708,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int buf_size)
 				}
 
 				else{
-						printf("Line no: %d : Error: Unknown pattern <%s>\n",lineNo, lexeme);
+						printf("Line no: %d: Error: Unknown pattern <%s>\n",lineNo, lexeme);
 						error = 1;
 						lexicalerror=1;
 				}
@@ -725,7 +725,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int buf_size)
 				}
 
 				else{
-						printf("Line no: %d : Error: Unknown pattern <%s>\n",lineNo, lexeme);
+						printf("Line no: %d: Error: Unknown pattern <%s>\n",lineNo, lexeme);
 						error = 1;
 						lexicalerror=1;
 				}
