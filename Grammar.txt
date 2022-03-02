@@ -11,15 +11,21 @@ dataType primitiveDatatype
 dataType constructedDatatype
 primitiveDatatype TK_INT
 primitiveDatatype TK_REAL
-constructedDatatype TK_RECORD TK_RECORDID
+constructedDatatype TK_RECORD TK_RUID
+constructedDatatype TK_UNION TK_RUID
+constructedDatatype TK_RUID
 remaining_list TK_COMMA parameter_list
 remaining_list eps
 stmts typeDefinitions declarations otherStmts returnStmt
-typeDefinitions typeDefinition typeDefinitions
+typeDefinitions actualOrRedefined typeDefinitions
+actualOrRedefined typeDefinition definetypestmt
 typeDefinitions eps
-typeDefinition TK_RECORD TK_RECORDID fieldDefinitions TK_ENDRECORD TK_SEM
+typeDefinition TK_RECORD TK_RUID fieldDefinitions TK_ENDRECORD
+typeDefinition TK_UNION TK_RUID fieldDefinitions TK_ENDUNION
 fieldDefinitions fieldDefinition fieldDefinition moreFields
-fieldDefinition TK_TYPE primitiveDatatype TK_COLON TK_FIELDID TK_SEM
+fieldDefinition TK_TYPE fieldtype TK_COLON TK_FIELDID TK_SEM
+fieldtype primitiveDatatype 
+fieldtype TK_RUID
 moreFields fieldDefinition moreFields
 moreFields eps
 declarations declaration declarations
@@ -35,9 +41,11 @@ stmt conditionalStmt
 stmt ioStmt
 stmt funCallStmt
 assignmentStmt singleOrRecId TK_ASSIGNOP arithmeticExpression TK_SEM
-singleOrRecId TK_ID new_24
-new_24 TK_DOT TK_FIELDID
-new_24 eps
+singleOrRecId TK_ID constructedVariable
+constructedVariable TK_ID oneExpansion moreExpansions
+oneExpansion TK_DOT TK_FIELDID
+moreExpansions oneExpansion moreExpansions 
+moreExpansions eps
 funCallStmt outputParameters TK_CALL TK_FUNID TK_WITH TK_PARAMETERS inputParameters TK_SEM
 outputParameters TK_SQL idList TK_SQR TK_ASSIGNOP
 outputParameters eps
@@ -46,36 +54,24 @@ iterativeStmt TK_WHILE TK_OP booleanExpression TK_CL stmt otherStmts TK_ENDWHILE
 conditionalStmt TK_IF TK_OP booleanExpression TK_CL TK_THEN stmt otherStmts elsePart
 elsePart TK_ELSE stmt otherStmts TK_ENDIF
 elsePart TK_ENDIF
-ioStmt TK_READ TK_OP singleOrRecId TK_CL TK_SEM
-ioStmt TK_WRITE TK_OP allVar TK_CL TK_SEM
-allVar TK_ID newallvar
-allVar TK_RNUM
-allVar TK_NUM
-newallvar TK_DOT TK_FIELDID
-newallvar eps
+ioStmt TK_READ TK_OP var TK_CL TK_SEM
+ioStmt TK_WRITE TK_OP var TK_CL TK_SEM
 arithmeticExpression term expPrime
 expPrime lowPrecedenceOperators term expPrime
 expPrime eps
 term factor termPrime
 termPrime highPrecedenceOperators factor termPrime
 termPrime eps
-factor all
 factor TK_OP arithmeticExpression TK_CL
-lowPrecedenceOperators TK_MINUS
-lowPrecedenceOperators TK_PLUS
+factor var
 highPrecedenceOperators TK_MUL
 highPrecedenceOperators TK_DIV
-all TK_ID allnew
-all TK_NUM
-all TK_RNUM
-allnew temp
-allnew eps
-temp eps
-temp TK_DOT TK_FIELDID
+lowPrecedenceOperators TK_PLUS
+lowPrecedenceOperators TK_MINUS
 booleanExpression TK_OP booleanExpression TK_CL logicalOp TK_OP booleanExpression TK_CL
 booleanExpression var relationalOp var
 booleanExpression TK_NOT TK_OP booleanExpression TK_CL
-var TK_ID
+var singleOrRecId
 var TK_NUM
 var TK_RNUM
 logicalOp TK_AND
@@ -92,3 +88,5 @@ optionalReturn eps
 idList TK_ID more_ids
 more_ids TK_COMMA idList
 more_ids eps
+definetypestmt TK_DEFINETYPE A TK_RUID TK_AS TK_RUID
+A TK_RECORD TK_UNION
