@@ -85,11 +85,12 @@ treenode runLexerAndParser(FILE* fp, FILE* parseTreeOutputFile, node* gRules, ha
 }
 
 int main (int argc, char* argv[]){
+	
 	int input;
 	lineNo=1;
 	char inputFileName[50], outputFileName[50];
 	FILE* fp ;
-		FILE* parseTreeOutputFile ;
+		FILE* parseTreeOutputFile;
 		FILE* cleanfile ;
 
 	if(argc != 3)
@@ -113,9 +114,8 @@ int main (int argc, char* argv[]){
 
     getFirst(ht,"First.txt");
     getFollow(ht,"Follow.txt");
-    
     parseTable pt = createParseTable(ht,gRules);
-    // printf("ParseTable Created");
+    //printf("ParseTable Created");
 	printIntro();
 
 	char str[20]; 
@@ -144,11 +144,11 @@ int main (int argc, char* argv[]){
 		case 3:
 			printf("Parsing...\n");
 			if(fp==NULL) printf("file pointer error");
-			treenode tree = runLexerAndParser(fp, parseTreeOutputFile, gRules, ht,pt); 
-			// printInorderTraversal(tree, parseTreeOutputFile);
+			//treenode tree = runLexerAndParser(fp, parseTreeOutputFile, gRules, ht,pt); 
+			//printInorderTraversal(tree, parseTreeOutputFile);
 			fprintf(parseTreeOutputFile,"%15s %6s %19s %15s %25s %8s %18s\n", "lexeme", "Line", "Token","Value","Parent","isLeaf","Node Symbol" );
 
-			printParseTree(tree, parseTreeOutputFile);
+			//printParseTree(tree, parseTreeOutputFile);
 			break;	
 
 		case 4:
@@ -159,7 +159,7 @@ int main (int argc, char* argv[]){
                                                 // invoke your lexer and parser here
 			printf("Printing total time taken...\n");
 
-			runLexerAndParser(fp, parseTreeOutputFile, gRules, ht,pt);
+			//runLexerAndParser(fp, parseTreeOutputFile, gRules, ht,pt);
 
             end_time = clock();
             total_CPU_time  =  (double) (end_time - start_time);

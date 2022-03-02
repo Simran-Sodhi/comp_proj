@@ -18,8 +18,9 @@ remaining_list TK_COMMA parameter_list
 remaining_list eps
 stmts typeDefinitions declarations otherStmts returnStmt
 typeDefinitions actualOrRedefined typeDefinitions
-actualOrRedefined typeDefinition definetypestmt
 typeDefinitions eps
+actualOrRedefined typeDefinition 
+actualOrRedefined definetypestmt
 typeDefinition TK_RECORD TK_RUID fieldDefinitions TK_ENDRECORD
 typeDefinition TK_UNION TK_RUID fieldDefinitions TK_ENDUNION
 fieldDefinitions fieldDefinition fieldDefinition moreFields
@@ -90,4 +91,5 @@ idList TK_ID more_ids
 more_ids TK_COMMA idList
 more_ids eps
 definetypestmt TK_DEFINETYPE A TK_RUID TK_AS TK_RUID
-A TK_RECORD TK_UNION
+A TK_RECORD 
+A TK_UNION
