@@ -763,12 +763,6 @@ void removeComments(FILE* testfile,FILE* cleanfile){
 }
 
 
-
-
-
-
-
-
 				
 
 
