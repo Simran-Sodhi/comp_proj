@@ -24,7 +24,7 @@ otherStmts TK_ID TK_WHILE TK_IF TK_READ TK_WRITE TK_SQL TK_CALL eps
 stmt TK_ID TK_WHILE TK_IF TK_READ TK_WRITE TK_SQL TK_CALL
 assignmentStmt TK_ID
 singleOrRecId TK_ID
-constructedVariable TK_ID
+option_single_constructed TK_DOT eps
 oneExpansion TK_DOT
 moreExpansions TK_DOT eps
 funCallStmt TK_SQL TK_CALL

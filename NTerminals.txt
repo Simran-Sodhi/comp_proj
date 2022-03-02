@@ -24,7 +24,7 @@ otherStmts
 stmt
 assignmentStmt
 singleOrRecId
-constructedVariable
+option_single_constructed
 oneExpansion
 moreExpansions
 funCallStmt
