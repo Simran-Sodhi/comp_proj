@@ -16,13 +16,13 @@ Simran Sodhi 2018B1A70896P
 hashTableEntry** hashTable;
 // int lineNo=1;
 
-FILE *getStream(FILE* fp,char* buffer,int bsize)
+FILE *getStream(FILE* fp,char* buffer,int buf_size)
 {
 	int count;
 	if(!feof(fp))
-		count=fread(buffer,1,bsize,fp);
+		count=fread(buffer,1,buf_size,fp);
 
-	if(count<bsize)
+	if(count<buf_size)
 	buffer[count] = '\0';
 
 	return fp;
@@ -34,33 +34,28 @@ void createLexerHashTable(){
 
 	hashTable=(hashTableEntry**)malloc(m*sizeof(hashTableEntry));
 	
-	char keywords[23][15]={"with","parameters","end","while","type","global",
+	char keyword_list[28][15]={"with","parameters","end","while","union", "endunion", "definetype","as", "type", "main","global",
 	"parameter","list","input","output","int","real","endwhile","if","then","endif",
 	"read","write","return","call","record","endrecord","else"}; 
 
-	int tokenids[23]={9,10,11,12,13,15,16,17,20,21,22,23,28,31,32,33,34,35,36,41,42,43,44};
+	int tokenids[28]={9,10,11,12,13,15,16,17,20,21,22,23,28,31,32,33,34,35,36,41,42,43,44, 46,49, 51,53,57};
 
-	for(int j=0;j<23;j++){
-		hashTable[hashFunc(keywords[j])]=(hashTableEntry*)malloc(sizeof(hashTableEntry));
-		hashTable[hashFunc(keywords[j])]->keyword=(char*)malloc(15*sizeof(char));
-		strcpy(hashTable[hashFunc(keywords[j])]->keyword,keywords[j]);
-		hashTable[hashFunc(keywords[j])]->tokenId=tokenids[j];
-		//printf("%s %d \n",hashTable[hashFunc(keywords[j])]->keyword,hashTable[hashFunc(keywords[j])]->tokenId);
+	for(int j=0;j<28;j++){
+		hashTable[hashFunc(keyword_list[j])]=(hashTableEntry*)malloc(sizeof(hashTableEntry));
+		hashTable[hashFunc(keyword_list[j])]->keyword=(char*)malloc(15*sizeof(char));
+		strcpy(hashTable[hashFunc(keyword_list[j])]->keyword,keyword_list[j]);
+		hashTable[hashFunc(keyword_list[j])]->tokenId=tokenids[j];
 	}
-
-	//printf("%s\n",hashTable[hashFunc("with")]->keyword);
-
 }
 
 int lookup(char* lexeme){
 
-	int in=hashFunc(lexeme);
-	if(hashTable[in]!=NULL && !strcmp(hashTable[in]->keyword,lexeme)){
+	int a=hashFunc(lexeme);
+	if(hashTable[a]!=NULL && !strcmp(hashTable[a]->keyword,lexeme)){
 
-		return hashTable[in]->tokenId;
+		return hashTable[a]->tokenId;
 	}
 	return -1;
-
 }
 
 long long hashFunc(char* string){
@@ -75,24 +70,24 @@ long long hashFunc(char* string){
 	return hashValue%m;
 }
 
-tokenInfo getNextToken(FILE *fp, char* buffer,int bsize)
+tokenInfo getNextToken(FILE *fp, char* buffer,int buf_size)
 {
 	if(ftell(fp)==0){
 		createLexerHashTable();
 	}
 
 	state = 1;
-	char* lexeme = (char*) malloc(bsize*sizeof(char));
-	memset(lexeme, 0, bsize);
+	char* lexeme = (char*) malloc(buf_size*sizeof(char));
+	memset(lexeme, 0, buf_size);
 	int i = 0;
 	tokenInfo token;
-	token.value = (char*) malloc(bsize*sizeof(char));
+	token.value = (char*) malloc(buf_size*sizeof(char));
 	token.tokenId=0;
 
 	int error = 0;
 
 	while(1){
-		if (offset == bsize || buffer[offset] == '\0'|| strlen(buffer)==0 ){
+		if (offset == buf_size || buffer[offset] == '\0'|| strlen(buffer)==0 ){
 			if(feof(fp)){
 				
 				if(strlen(lexeme)!=0){
@@ -122,7 +117,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int bsize)
 				}
 			}
 			memset(buffer, 0, sizeof(buffer));
-			fp = getStream(fp, buffer, bsize);
+			fp = getStream(fp, buffer, buf_size);
 			offset = 0;
 
 
@@ -356,7 +351,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int bsize)
 					state=3;
 					break;
 				}
-				if(buffer[offset] != '\0' && offset != bsize && buffer[offset] == '.'){
+				if(buffer[offset] != '\0' && offset != buf_size && buffer[offset] == '.'){
 					state = 4;
 					token.tokenId=0;
 					lexeme[i++] = buffer[offset++];
@@ -455,7 +450,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int bsize)
 					token.tokenId=4;
 					token.line=lineNo;
 					if(strlen(lexeme)>20){
-						printf("Line No %d: Error :Variable Identifier is longer than the prescribed length of 20 characters.\n", lineNo);
+						printf("Line No %d: Error: Length of variable identifier is longer than 20 characters.\n", lineNo);
 						error = 1;
 						lexicalerror=1;
 						state=1;
@@ -488,7 +483,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int bsize)
 					lexeme[i++] = buffer[offset++];
 				}
 				else{
-						printf("Line no: %d : Error: Unknown pattern <%s>\n",lineNo, lexeme);
+						printf("Line no: %d : Error: Unknown Pattern <%s>\n",lineNo, lexeme);
 						error = 1;
 						lexicalerror=1;
 						state=1;
@@ -506,7 +501,6 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int bsize)
 					lexeme[i++] = buffer[offset++];
 				}
 				else{
-					//const char* keyword="_main";
 					if(!strcmp("_main",lexeme)){
 						token.tokenId=14;
 						token.value=lexeme;
@@ -516,7 +510,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int bsize)
 					strcpy(token.value,lexeme);
 					token.line=lineNo;
 					if(strlen(lexeme)>30){
-						printf("Line No %d: Error :Function Identifier is longer than the prescribed length of 30 characters.\n", lineNo);
+						printf("Line No %d: Error: Function identifier is longer than 30 characters.\n", lineNo);
 						error = 1;
 						lexicalerror=1;
 						state=1;
@@ -537,7 +531,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int bsize)
 					token.line=lineNo;
 					strcpy(token.value,lexeme);
 					if(strlen(lexeme)>30){
-						printf("Line No %d: Error :Function Identifier is longer than the prescribed length of 30 characters.\n", lineNo);
+						printf("Line No %d: Error :Function identifier is longer than 30 characters.\n", lineNo);
 						error = 1;
 						lexicalerror=1;
 						state=1;
@@ -556,7 +550,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int bsize)
 
 				}
 				else{
-						printf("Line no: %d : Error: Unknown pattern <%s>\n",lineNo, lexeme);
+						printf("Line no: %d : Error: Unknown Pattern <%s>\n",lineNo, lexeme);
 						error = 1;
 						lexicalerror=1;
 						state=1;
@@ -586,7 +580,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int bsize)
 				}
 
 				else{
-						printf("Line no: %d : Error: Unknown pattern <%s>\n",lineNo, lexeme);
+						printf("Line no: %d : Error: Unknown Pattern <%s>\n",lineNo, lexeme);
 						error = 1;
 						lexicalerror=1;
 						state=1;
@@ -604,7 +598,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int bsize)
 				}
 
 				else{
-						printf("Line no: %d : Error: Unknown pattern <%s>\n",lineNo, lexeme);
+						printf("Line no: %d : Error: Unknown Pattern <%s>\n",lineNo, lexeme);
 						error = 1;
 						lexicalerror=1;
 						state=1;
@@ -619,7 +613,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int bsize)
 				}
 
 				else{
-						printf("Line no: %d : Error: Unknown pattern <%s>\n",lineNo, lexeme);
+						printf("Line no: %d : Error: Unknown Pattern <%s>\n",lineNo, lexeme);
 						error = 1;
 						lexicalerror=1;
 						state=1;
@@ -637,7 +631,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int bsize)
 				}
 
 				else{
-						printf("Line no: %d : Error: Unknown pattern <%s>\n",lineNo, lexeme);
+						printf("Line no: %d : Error: Unknown Pattern <%s>\n",lineNo, lexeme);
 						error = 1;
 						lexicalerror=1;
 						state=1;
@@ -686,7 +680,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int bsize)
 					return token;
 				}
 				else{
-					printf("Line No %d: Error : Unknown Symbol <%c>\n",lineNo, buffer[offset-1]);
+					printf("Line No %d: Error: Unknown Symbol <%c>\n",lineNo, buffer[offset-1]);
 					error = 1;
 					lexicalerror=1;
 				}
@@ -700,7 +694,7 @@ tokenInfo getNextToken(FILE *fp, char* buffer,int bsize)
 					return token;
 				}
 				else{
-					printf("Line No %d: Error : Unknown Symbol <%c>\n",lineNo, buffer[offset-1]);
+					printf("Line No %d: Error: Unknown Symbol <%c>\n",lineNo, buffer[offset-1]);
 					error = 1;
 					lexicalerror=1;
 				}
