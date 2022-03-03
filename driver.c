@@ -39,14 +39,14 @@ void printIntro(){
 void printTokenList(FILE* fp){
 
     
-    int bsize=300;
-    char *buffer=(char*)malloc(bsize*sizeof(char));
+    int buf_size=300;
+    char *buffer=(char*)malloc(buf_size*sizeof(char));
     tokenInfo token;
-    token=getNextToken(fp,buffer,bsize);
+    token=getNextToken(fp,buffer,buf_size);
 
     while(token.tokenId!=54){
         printf("Line no. %d\t Lexeme %s\t Token %s\n", token.line, token.value, getCorrespondingString(token.tokenId));
-        token=getNextToken(fp,buffer,bsize);
+        token=getNextToken(fp,buffer,buf_size);
     }
     rewind(fp);
     lineNo=1;
@@ -69,11 +69,11 @@ treenode runLexerAndParser(FILE* fp, FILE* parseTreeOutputFile, node* gRules, ha
     if(gRules==NULL)  gRules = readGrammar("Grammar.txt",ht);
     
     int	error=0;
- 	int bsize=300;
-	char *buffer=(char*)malloc(bsize*sizeof(char));
+ 	int buf_size=300;
+	char *buffer=(char*)malloc(buf_size*sizeof(char));
    	tokenInfo t;
-   	t=getNextToken(fp,buffer,bsize);
-   	treenode w = parseInputSourceCode(fp, pTable,gRules,t,buffer, bsize,ht,&error);
+   	t=getNextToken(fp,buffer,buf_size);
+   	treenode w = parseInputSourceCode(fp, pTable,gRules,t,buffer, buf_size,ht,&error);
    	if(error==0){
    		printf("Input Source Code is syntactically correct....\n");
    	}
@@ -144,7 +144,7 @@ int main (int argc, char* argv[]){
 		case 3:
 			printf("Parsing...\n");
 			if(fp==NULL) printf("file pointer error");
-			treenode tree = runLexerAndParser(fp, parseTreeOutputFile, gRules, ht,pt); 
+			//treenode tree = runLexerAndParser(fp, parseTreeOutputFile, gRules, ht,pt); 
 			//printInorderTraversal(tree, parseTreeOutputFile);
 			fprintf(parseTreeOutputFile,"%15s %6s %19s %15s %25s %8s %18s\n", "lexeme", "Line", "Token","Value","Parent","isLeaf","Node Symbol" );
 
@@ -159,7 +159,7 @@ int main (int argc, char* argv[]){
                                                 // invoke your lexer and parser here
 			printf("Printing total time taken...\n");
 
-			runLexerAndParser(fp, parseTreeOutputFile, gRules, ht,pt);
+			//runLexerAndParser(fp, parseTreeOutputFile, gRules, ht,pt);
 
             end_time = clock();
             total_CPU_time  =  (double) (end_time - start_time);

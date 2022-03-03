@@ -390,10 +390,10 @@ char* getCorrespondingString(int f){
 
 int getColumnIndex(char* string){
 
-	char* tokens[PTcols-1]= {"TK_ASSIGNOP", "TK_COMMENT", "TK_FIELDID", "TK_ID", "TK_NUM", "TK_RNUM", "TK_FUNID", "TK_RECORDID", "TK_WITH", "TK_PARAMETERS", 
-	"TK_END", "TK_WHILE", "TK_TYPE", "TK_MAIN", "TK_GLOBAL", "TK_PARAMETER", "TK_LIST", "TK_SQL", "TK_SQR", "TK_INPUT", "TK_OUTPUT", "TK_INT", "TK_REAL", "TK_COMMA",
+	char* tokens[PTcols-1]= {"TK_ASSIGNOP", "TK_COMMENT", "TK_FIELDID", "TK_ID", "TK_NUM", "TK_RNUM", "TK_FUNID", "TK_RUID", "TK_WITH", "TK_PARAMETERS", "TK_UNION", "TK_ENDUNION",
+	"TK_END", "TK_WHILE", "TK_TYPE", "TK_MAIN", "TK_GLOBAL", "TK_PARAMETER", "TK_LIST", "TK_SQL", "TK_SQR", "TK_INPUT", "TK_OUTPUT","TK_AS", "TK_INT", "TK_REAL", "TK_COMMA",
 	 "TK_SEM", "TK_COLON", "TK_DOT", "TK_ENDWHILE", "TK_OP", "TK_CL", "TK_IF", "TK_THEN", "TK_ENDIF", "TK_READ", "TK_WRITE", "TK_RETURN", "TK_PLUS", "TK_MINUS", "TK_MUL", "TK_DIV",
-	  "TK_CALL", "TK_RECORD", "TK_ENDRECORD", "TK_ELSE", "TK_AND", "TK_OR", "TK_NOT", "TK_LT", "TK_LE", "TK_EQ", "TK_GT", "TK_GE", "TK_NE", "$"};
+	  "TK_CALL", "TK_RECORD", "TK_ENDRECORD", "TK_ELSE", "TK_AND", "TK_OR", "TK_NOT", "TK_LT", "TK_LE", "TK_EQ", "TK_GT", "TK_GE", "TK_NE", "$", "TK_DEFINETYPE"};
 
 	for(int i=0; i<PTcols-1; i++){
 		if(strcmp(string, tokens[i])==0)
@@ -407,10 +407,10 @@ int getColumnIndex(char* string){
 
 int getRowIndex(char* string){
   char* nt[PTrows]= {"program", "mainFunction", "otherFunctions", "function", "input_par", "output_par", "parameter_list", "dataType", "primitiveDatatype",
-  "constructedDatatype","remaining_list","stmts","typeDefinitions","typeDefinition","fieldDefinitions","fieldDefinition","moreFields",
-  "declarations","declaration","global_or_not","otherStmts","stmt","assignmentStmt","singleOrRecId","new_24","funCallStmt","outputParameters","inputParameters",
-  "iterativeStmt","conditionalStmt","elsePart","ioStmt","allVar","arithmeticExpression","expPrime","term","termPrime","factor","lowPrecedenceOperators",
-  "highPrecedenceOperators","all","temp","booleanExpression","var","logicalOp","relationalOp","returnStmt","optionalReturn","idList","more_ids","newallvar","allnew"};
+  "constructedDatatype","remaining_list","stmts","typeDefinitions","actualOrRedefined", "typeDefinition","fieldDefinitions","fieldDefinition", "fieldtype","moreFields",
+  "declarations","declaration","global_or_not","otherStmts","stmt","assignmentStmt","singleOrRecId","option_single_constructed","oneExpansion", "moreExpansions","funCallStmt","outputParameters","inputParameters",
+  "iterativeStmt","conditionalStmt","elsePart","ioStmt","arithmeticExpression","expPrime","term","termPrime","factor","lowPrecedenceOperators",
+  "highPrecedenceOperators","booleanExpression","var","logicalOp","relationalOp","returnStmt","optionalReturn","idList","more_ids","definetypestmt", "A"};
   for(int i=0; i<PTrows; i++)
   {
     if(strcmp(string, nt[i])==0)
