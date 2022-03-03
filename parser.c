@@ -11,7 +11,7 @@ Simran Sodhi 2018B1A70896P
 #include "parser.h"
 
 int hash_size = 10000;
-#define PTrows 52
+#define PTrows 54
 #define PTcols 55
 #define Ngrammar 94
 
