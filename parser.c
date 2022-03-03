@@ -279,12 +279,19 @@ char* getCorrespondingString(int f){
         case 4: return "TK_ID";
         case 5: return "TK_NUM";
         case 6: return "TK_RNUM";
+        // case : return "TK_RNUM";
         case 7: return "TK_FUNID";
-        case 8: return "TK_RECORDID";
+        case 8: return "TK_RUID"; // changed
         case 9: return "TK_WITH";
         case 10: return "TK_PARAMETERS";
         case 11: return "TK_END";
         case 12: return "TK_WHILE";
+        /*
+        case : return "TK_UNION";
+        case : return "TK_ENDUNION";
+        case : return "TK_DEFINETYPE";
+        case : return "TK_AS";
+        */
         case 13: return "TK_TYPE";
         case 14: return "TK_MAIN";
         case 15: return "TK_GLOBAL";
@@ -324,7 +331,7 @@ char* getCorrespondingString(int f){
         case 49: return "TK_LE";
         case 50: return "TK_EQ";
         case 51: return "TK_GT";
-        case 52: return "TK_GE";
+        case 52: return "TK_GE"; //wrong in language specifications 
         case 53: return "TK_NE";
         case 54: return "$";
 
@@ -341,6 +348,7 @@ char* getCorrespondingString(int f){
         case 110: return "remaining_list";
         case 111: return "stmts";
         case 112: return "typeDefinitions";
+        // case : return "actualOrRedefined";
         case 113: return "typeDefinition";
         case 114: return "fieldDefinitions";
         case 115: return "fieldDefinition";
@@ -352,7 +360,11 @@ char* getCorrespondingString(int f){
         case 121: return "stmt";
         case 122: return "assignmentStmt";
         case 123: return "singleOrRecId";
-        case 124: return "new_24";
+        // case : return "singleOrRecId";
+        // case : return "option_single_constructed";
+        // case : return "oneExpansion";
+        // case : return "moreExpansions";
+        case 124: return "new_24"; // remove ??
         case 125: return "funCallStmt";
         case 126: return "outputParameters";
         case 127: return "inputParameters";
@@ -360,7 +372,7 @@ char* getCorrespondingString(int f){
         case 129: return "conditionalStmt";
         case 130: return "elsePart";
         case 131: return "ioStmt";
-        case 132: return "allVar";
+        case 132: return "allVar"; // remove ??
         case 133: return "arithmeticExpression";
         case 134: return "expPrime";
         case 135: return "term";
@@ -378,8 +390,10 @@ char* getCorrespondingString(int f){
         case 147: return "optionalReturn";
         case 148: return "idList";
         case 149: return "more_ids";
-        case 150: return "newallvar";
-        case 151: return "allnew";
+        case 150: return "newallvar"; // remove ??
+        case 151: return "allnew"; // remove ??
+        // case : return "definetypestmt";
+        // case : return "A";
         default:
                 {
                     
